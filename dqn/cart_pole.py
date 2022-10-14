@@ -86,12 +86,12 @@ def play_game(env, TrainNet, TargetNet, epsilon, copy_step):
     rewards = 0
     iter = 0
     done = False
-    observations = env.reset()
+    observations, _ = env.reset()
     losses = list()
     while not done:
         action = TrainNet.get_action(observations, epsilon)
         prev_observations = observations
-        observations, reward, done, _ = env.step(action)
+        observations, reward, done, _, _ = env.step(action)
         rewards += reward
         if done:
             reward = -200
@@ -118,7 +118,7 @@ def make_video(env, TrainNet):
     while not done:
         env.render()
         action = TrainNet.get_action(observation, 0)
-        observation, reward, done, _ = env.step(action)
+        observation, reward, done, _, _= env.step(action)
         steps += 1
         rewards += reward
     print("Testing steps: {} rewards {}: ".format(steps, rewards))
